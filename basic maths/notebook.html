@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSA Notebook</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            min-height: 600px;
+        }
+
+        .algorithms {
+            background: #f8f9fa;
+            padding: 30px;
+            border-right: 2px solid #e9ecef;
+        }
+
+        .algorithms h2 {
+            color: #495057;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+        }
+
+        .algorithm-list {
+            list-style: none;
+        }
+
+        .algorithm-item {
+            background: white;
+            margin-bottom: 15px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .algorithm-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .algorithm-item h3 {
+            color: #495057;
+            margin-bottom: 8px;
+        }
+
+        .algorithm-item p {
+            color: #6c757d;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .code-section {
+            background: #1e1e1e;
+            padding: 30px;
+            color: white;
+        }
+
+        .code-section h2 {
+            color: #d4d4d4;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+        }
+
+        .code-display {
+            background: #2d2d2d;
+            border-radius: 8px;
+            padding: 25px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
+            border: 1px solid #404040;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .code-display pre {
+            margin: 0;
+            color: #d4d4d4;
+        }
+
+        .algorithm-item.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .algorithm-item.active h3,
+        .algorithm-item.active p {
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+            
+            .algorithms {
+                border-right: none;
+                border-bottom: 2px solid #e9ecef;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>DSA Learning Notebook</h1>
+            <p>Interactive reference for Data Structures and Algorithms</p>
+        </div>
+        
+        <div class="content">
+            <div class="algorithms">
+                <h2>Basic Math Algorithms</h2>
+                <ul class="algorithm-list">
+                    <li class="algorithm-item active" onclick="showAlgorithm('digitCount')">
+                        <h3>Digit Count Algorithm</h3>
+                        <p>Counts and displays individual digits of a number</p>
+                    </li>
+                    <li class="algorithm-item" onclick="showAlgorithm('reverse')">
+                        <h3>Number Reversal Algorithm</h3>
+                        <p>Reverses the digits of a given number</p>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="code-section">
+                <h2>Algorithm Code</h2>
+                <div class="code-display">
+                    <pre id="codeOutput">// Select an algorithm from the left to view its code</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const algorithms = {
+            digitCount: `import java.util.Scanner;
+
+public class digitcount {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("enter a digit:");
+        int N = sc.nextInt();
+
+        while(N>0){
+            int rem=N%10;
+            N = N/10;
+            System.out.println("digits"+rem);
+        }
+        sc.close();
+    }
+}`,
+
+            reverse: `import java.util.Scanner;
+
+public class rev {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("enter a digit:");
+        int N = sc.nextInt();
+        int rev=0;
+
+        while(N>0){
+            int rem=N%10;
+            N = N/10;
+            rev=rev*10+rem;
+        }
+        System.out.println("digits"+rev);
+        sc.close();
+    }
+}`
+        };
+
+        function showAlgorithm(algorithm) {
+            // Update active state
+            document.querySelectorAll('.algorithm-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            // Display code
+            document.getElementById('codeOutput').textContent = algorithms[algorithm];
+        }
+
+        // Initialize with first algorithm
+        showAlgorithm('digitCount');
+    </script>
+</body>
+</html>
